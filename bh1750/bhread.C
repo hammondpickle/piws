@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include <fstream>
 
 #include <wiringPiI2C.h>
 
@@ -41,12 +42,17 @@ int main(int argc, char *argv[])
   wiringPiI2CWrite(fd, 0x01);
   usleep(50000);
   wiringPiI2CWrite(fd, 0x11);
+  int mtreg=254;
+  wiringPiI2CWrite(fd, 0x40 | (mtreg >> 5));
+  wiringPiI2CWrite(fd, 0x60 | (mtreg & 0x1f));
+  ofstream ofs("lux.log");
   while(1) {
-    usleep(180000);
+    sleep(10);
     unsigned char buf[2];
     read(fd, buf, 2);
-    int val=buf[1] << 8 | buf[0];
-    cout << val*1.2/2.0 << endl;
-    sleep(1);
+    int val=buf[0] << 8 | buf[1];
+    cout << val*1.2*(69.0/mtreg)/2.0 << endl;
+    ofs << val*1.2*(69.0/mtreg)/2.0 << endl;
   }
+  ofs.close();
 }

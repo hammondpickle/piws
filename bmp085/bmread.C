@@ -38,7 +38,6 @@ int main(int argc, char *argv[])
     exit(1);
   }
 
-  //
   int ac1=readSS(fd, 0xAA);
   int ac2=readSS(fd, 0xAC);
   int ac3=readSS(fd, 0xAE);
@@ -50,11 +49,14 @@ int main(int argc, char *argv[])
   int mb=readSS(fd, 0xBA);
   int mc=readSS(fd, 0xBC);
   int md=readSS(fd, 0xBE);
+  cout << ac1 << " " << ac2 << " " << ac3 << " " << ac4 << " " << ac5 << " " << ac6 << endl;
+  cout << b1 << " " << b2 << " " << mb << " " << mc << " " << md << endl;
 
   //
   wiringPiI2CWriteReg8(fd, 0xF4, 0x2E);
   usleep(5000);
   long ut=readUS(fd, 0xF6);
+  cout << "ut=" << ut << endl;
   long x1=(((long)ut-(long)ac6)*(long)ac5) >> 15;
   long x2=((long)mc << 11)/(x1+md);
   long b5=x1+x2;
