@@ -28,7 +28,7 @@ void TSL2561::initialise(void)
   i2c.writeByte(TSL2561_COMMAND | TSL2561_REG_CONTROL);
   i2c.writeByte(TSL2561_CMD_POWERUP);
   i2c.writeByte(TSL2561_COMMAND | TSL2561_REG_TIMING_GAIN);
-  i2c.writeByte(0x02);
+  i2c.writeByte(0x12);
   usleep(400000);
   integ=402.0;
   gain=1.0;

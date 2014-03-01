@@ -1,16 +1,16 @@
-#ifndef _TMP102_H_
-#define _TMP102_H_
+#ifndef _TMP275_H_
+#define _TMP275_H_
 
-class TMP102 {
+class TMP275 {
  public:
   void initialise();
   void read(float& temp);
 };
 
 #ifdef _MAIN_
-TMP102 tmp102;
+TMP275 tmp275;
 #else
-extern TMP102 tmp102;
+extern TMP275 tmp275;
 #endif
 
 #endif
