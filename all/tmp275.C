@@ -32,5 +32,5 @@ void TMP275::read(float& temp)
   short int val=(msb << 8) | lsb;
   val>>=4;
   if(val & (1<<11)) val|=0xF800;
-  temp=val*0.0625;
+  temp=(val+0.5)*0.0625;
 }

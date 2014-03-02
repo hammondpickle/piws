@@ -35,6 +35,12 @@ namespace I2C {
     init=true;
   }
 
+  // Set baud rate
+  void Interface::setBaudRate(uint32_t rate)
+  {
+    bcm2835_i2c_set_baudrate(rate);
+  }
+
   // Set the slave address of the device
   void Interface::setSlaveAddress(SlaveAddress addr)
   {
@@ -107,7 +113,8 @@ namespace I2C {
   {
     initCheck();
     char buf[3];
-    bcm2835_i2c_read_register_rs(&reg, &buf[0], 3);
+    int ok=bcm2835_i2c_read_register_rs(&reg, &buf[0], 3);
+    if(ok) cout << "I2C read error " << ok << endl;
     return (buf[1]<<8) | buf[0];
   }
 

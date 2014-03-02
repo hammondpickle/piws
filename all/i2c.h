@@ -25,6 +25,7 @@ namespace I2C {
     ~Interface();
     void initialise(void);
     void setSlaveAddress(SlaveAddress addr);
+    void setBaudRate(uint32_t rate);
     void writeByte(uint8_t byte);
     void writeBytePair(uint8_t byte0, uint8_t byte1);
     uint8_t readByte(void);
