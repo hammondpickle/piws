@@ -27,7 +27,7 @@ try {
 
   //
   $graph=new Graph($width, $height);
-  $graph->SetScale("linlin",900,1100,-$tlim,0);
+  $graph->SetScale("linlin",0,0,-$tlim,0);
   $graph->xaxis->SetPos('min');
   $graph->yaxis->SetPos('min');
 
