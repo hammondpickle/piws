@@ -4,6 +4,7 @@
 #include <string>
 #include <exception>
 #include <stdexcept>
+#include <valarray>
 
 #include <stdint.h>
 
@@ -27,6 +28,7 @@ namespace I2C {
     void setSlaveAddress(SlaveAddress addr);
     void setBaudRate(uint32_t rate);
     void writeByte(uint8_t byte);
+    void writeBytes(std::valarray<uint8_t> bytes);
     void writeBytePair(uint8_t byte0, uint8_t byte1);
     uint8_t readByte(void);
     void readBytePair(uint8_t& byte0, uint8_t& byte1);

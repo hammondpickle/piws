@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <sys/time.h>
 
+#include <mysql++/mysql++.h>
+
 #define _MAIN_
 
 #include "i2c.h"
@@ -13,6 +15,7 @@
 #include "htu21d.h"
 
 using namespace std;
+using namespace mysqlpp;
 
 double timer(void)
 {
@@ -32,6 +35,11 @@ int main(int argc, char *argv[])
   tsl2561.initialise();
   bmp085.initialise();
   htu21d.initialise();
+
+  // Connect to the database
+  Connection dbh(true);
+  dbh.connect("weathermon", "bismuth.local", "pi", "");
+  Query qry=dbh.query();
 
   ofstream ofs("piws.csv", ios::app);
   float accTempAcc=0.0, remoteTempAcc=0.0, pressureAcc=0.0, luxAcc=0.0,
@@ -80,6 +88,12 @@ int main(int argc, char *argv[])
 	   << " dewpt=" << dewpointAcc/nsample << " lux=" << luxAcc/nsample << endl;
       ofs << accTempAcc/nsample << "," << remoteTempAcc/nsample << "," << pressureAcc/nsample << ","
 	  << humidityAcc/nsample << ","  << dewpointAcc/nsample << "," << luxAcc/nsample << endl;
+      qry << "INSERT INTO sensor_log (tstamp, ambient_temperature, sky_temperature, pressure, humidity, "
+	  << "dewpoint, ambient_light) "
+	  << "VALUES(NOW(), " << accTempAcc/nsample << ", " << remoteTempAcc/nsample << ", "
+	  << pressureAcc/nsample << ", " << humidityAcc/nsample << ", "  << dewpointAcc/nsample
+	  << ", " << luxAcc/nsample << ")";
+      qry.exec();
       accTempAcc=remoteTempAcc=pressureAcc=luxAcc=humidityAcc=dewpointAcc=0.0;
       tbeg=tnow;
       nsample=0;

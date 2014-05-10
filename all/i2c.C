@@ -1,4 +1,5 @@
 #include <iostream>
+#include <valarray>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -52,6 +53,12 @@ namespace I2C {
   void Interface::writeByte(uint8_t byte)
   {
     bcm2835_i2c_write((char*)&byte, 1);
+  }
+
+  //
+  void Interface::writeBytes(valarray<uint8_t> bytes)
+  {
+    bcm2835_i2c_write((char*)&bytes[0], bytes.size());
   }
 
   //
