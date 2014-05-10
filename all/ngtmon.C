@@ -30,6 +30,8 @@ int main(int argc, char *argv[])
   // Initialise the sensors
   tmp102.initialise();
   ad1115.initialise();
+  ad1115.set_gain(1);
+  ad1115.set_rate(0);
 
   ofstream ofs("ngtmon.csv", ios::app);
   double tbeg=timer();
@@ -37,8 +39,9 @@ int main(int argc, char *argv[])
     // Read the TMP102 temperature sensor
     float ambTemp;
     tmp102.read(ambTemp);
-    uint16_t val=ad1115.read(0);
-    cout << ambTemp << " " << val << endl;
+    uint16_t val=ad1115.read(4);
+    float fval=ad1115.convert(val);
+    cout << ambTemp << " " << val << " " << fval << endl;
     sleep(1);
   }
 }

@@ -4,9 +4,15 @@
 #include <stdint.h>
 
 class AD1115 {
+  float fsvolt;
+  uint8_t gain_bits, mux_bits, rate_bits;
+  int tsamp_usec;
  public:
   void initialise();
   uint16_t read(int channel);
+  void set_gain(int gain);
+  void set_rate(int rate);
+  float convert(uint16_t val);
 };
 
 #ifdef _MAIN_
