@@ -48,6 +48,7 @@ void AD1115::set_gain(int gain)
     fsvolt=0.256;
     break;
   }
+  cout << "Full-scale voltage " << fsvolt << endl;
 }
 
 //
